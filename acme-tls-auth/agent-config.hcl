@@ -1,4 +1,4 @@
-#vault agent -config-file=agent.hcl -log-file=/var/logs/vault-agent.log
+#vault agent -config-file=/etc/vault/config/agent-config.hcl -log-file=/var/logs/vault-agent.log
 pid_file = "/etc/vault/.pidfile"
 
 vault {
