@@ -5,8 +5,8 @@ vault {
   address = "<Vault server address>"
   namespace = "<Vault namespace>" 
   ca_cert = "/etc/vault/certs/vault_tls_cert.pem"
-  client_cert = "/etc/letsencrypt/live/$EC2_PUBLIC_DNS/fullchain.pem"
-  client_key = "/etc/letsencrypt/live/$EC2_PUBLIC_DNS/privkey.pem"
+  client_cert = "/etc/letsencrypt/live/<EC2_PUBLIC_DNS>/fullchain.pem"
+  client_key = "/etc/letsencrypt/live/<EC2_PUBLIC_DNS>/privkey.pem"
 }
 
 auto_auth {
