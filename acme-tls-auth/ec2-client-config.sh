@@ -1,6 +1,7 @@
 
 #!/bin/bash
 #===README===
+#Run this script with sudo
 #Install certbot
 #Install Vault Agent
 
@@ -17,10 +18,10 @@ curl $VAULT_ADDR/v1/p$VAULT_ACME_CA_PATH/ca/pem -o /etc/vault/certs/acme_ca.pem
 #Tell certbot to trust the CA
 export REQUESTS_CA_BUNDLE="/etc/vault/certs/acme_ca.pem"
 
-sudo certbot certonly --standalone --server $VAULT_ADDR/v1/$VAULT_NAMESPACE/$VAULT_ACME_CA_PATH/roles/$VAULT_ACME_PKI_ROLE/acme/directory -d $EC2_PUBLIC_DNS --key-type rsa --register-unsafely-without-email
-sudo chmod 0755 /etc/letsencrypt/{live,archive}
-sudo chgrp $VAULT_AGENT_GROUP /etc/letsencrypt/live/$EC2_PUBLIC_DNS/privkey.pem
-sudo chmod 0640 /etc/letsencrypt/live/$EC2_PUBLIC_DNS/privkey.pem
+certbot certonly --standalone --server $VAULT_ADDR/v1/$VAULT_NAMESPACE/$VAULT_ACME_CA_PATH/roles/$VAULT_ACME_PKI_ROLE/acme/directory -d $EC2_PUBLIC_DNS --key-type rsa --register-unsafely-without-email
+chmod 0755 /etc/letsencrypt/{live,archive}
+chgrp $VAULT_AGENT_GROUP /etc/letsencrypt/live/$EC2_PUBLIC_DNS/privkey.pem
+chmod 0640 /etc/letsencrypt/live/$EC2_PUBLIC_DNS/privkey.pem
 
 #Inspect cert:
 #sudo openssl x509 -in /etc/letsencrypt/live/$EC2_PUBLIC_DNS/cert.pem -text
