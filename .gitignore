@@ -1,0 +1,12 @@
+approle-auth/roleid
+approle-auth/secretid
+approle-auth/render-content.txt
+approle-auth/token_unwrapped
+approle-auth/token_wrapped
+acme-tls-auth/cmds.txt
+acme-tls-auth/agent.hcl
+acme-tls-auth/config-process.txt
+acme-tls-auth/terraform/.terraform
+acme-tls-auth/terraform/.terraform.lock*
+acme-tls-auth/terraform/terraform.tfstate*
+acme-tls-auth/terraform/*.tfvars
