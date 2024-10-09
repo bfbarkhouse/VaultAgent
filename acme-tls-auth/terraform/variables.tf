@@ -4,7 +4,7 @@ variable "vault_server" {
 }
 variable "vault_ns" {
   type    = string
-  default = "admin"
+  default = "root"
 }
 variable "root_ca_path" {
   type    = string

@@ -27,8 +27,7 @@ sudo chmod 0640 /etc/letsencrypt/live/$EC2_PUBLIC_DNS/privkey.pem
 #Get the ACME server’s issuer CA cert:
 curl $VAULT_ADDR/v1/pki_int/ca/pem -o /etc/vault.d/CA/pki_int_ca.pem
 
-#Get Vault TLS CA cert:
- /etc/vault.d/CA/vault_tls_ca.pem
+#Upload Vault TLS listener cert to /etc/vault.d/CA/vault_tls_cert.pem
 
 vault agent -config-file=/etc/vault.d/agent/agent-config.hcl -log-file=/var/logs/vault-agent.log
 

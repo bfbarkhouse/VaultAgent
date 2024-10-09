@@ -115,3 +115,15 @@ resource "vault_cert_auth_backend_role" "vault_agent_cert_auth_role" {
     token_ttl      = 3600
     token_policies = var.cert_auth_policies
 }
+
+#Output the TLS listener CA file
+data "tls_certificate" "vault_tls_listener_cert" {
+    url = "https://bbarkhouse-vault-cluster.vault.ccaa60c2-b32a-48c6-a722-261bab55cd7c.aws.hashicorp.cloud:8200"
+    #url = var.vault_server
+}
+locals {
+    get_leaf_cert = length(data.tls_certificate.vault_tls_listener_cert.certificates)
+    vault_tls_listener_cert = "${data.tls_certificate.vault_tls_listener_cert.certificates["${local.get_leaf_cert}"-1].cert_pem}"
+
+}
+

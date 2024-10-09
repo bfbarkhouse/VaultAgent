@@ -4,7 +4,7 @@ pid_file = "pidfile"
 vault {
   address = "$VAULT_ADDR"
   namespace = "$VAULT_NAMESPACE" 
-  ca_cert = "/etc/vault.d/CA/vault_tls_ca.pem"
+  ca_cert = "/etc/vault.d/CA/vault_tls_cert.pem"
   client_cert = "/etc/letsencrypt/live/$EC2_PUBLIC_DNS/fullchain.pem"
   client_key = "/etc/letsencrypt/live/$EC2_PUBLIC_DNS/privkey.pem"
 }
