@@ -50,7 +50,6 @@ variable "cert_auth_path" {
 variable "cert_auth_role_name" {
     type = string
     default = "vaclient"
-  
 }
 variable "cert_auth_allowed_dns_sans" {
     type = list(string)

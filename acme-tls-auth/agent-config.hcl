@@ -1,10 +1,10 @@
 #vault agent -config-file=agent.hcl -log-file=/var/logs/vault-agent.log
-pid_file = "pidfile"
+pid_file = "/etc/vault/.pidfile"
 
 vault {
-  address = "$VAULT_ADDR"
-  namespace = "$VAULT_NAMESPACE" 
-  ca_cert = "/etc/vault.d/CA/vault_tls_cert.pem"
+  address = "<Vault server address>"
+  namespace = "<Vault namespace>" 
+  ca_cert = "/etc/vault/certs/vault_tls_cert.pem"
   client_cert = "/etc/letsencrypt/live/$EC2_PUBLIC_DNS/fullchain.pem"
   client_key = "/etc/letsencrypt/live/$EC2_PUBLIC_DNS/privkey.pem"
 }
@@ -22,7 +22,7 @@ auto_auth {
     #the written token will be response-wrapped by the sink. 
     wrap_ttl = "10m"
     config = {
-      path = "/etc/vault.d/agent/.wrapped_vaultoken"
+      path = "/etc/vault/.wrapped_vaultoken"
       #A string containing an octal number representing the bit pattern for the file mode, 
       #similar to chmod. Set to 0000 to prevent Vault from modifying the file mode.
       #mode = ""
