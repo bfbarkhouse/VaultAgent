@@ -9,7 +9,6 @@ variable "vault_ns" {
 variable "root_ca_path" {
   type    = string
   default = "pki_root"
-
 }
 variable "root_ca_type" {
   type    = string

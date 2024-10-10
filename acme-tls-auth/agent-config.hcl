@@ -1,5 +1,6 @@
 pid_file = "/tmp/pidfile"
 
+#Modify these values before running
 vault {
   address = "<Vault server address>"
   namespace = "<Vault namespace>" 

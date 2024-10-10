@@ -8,22 +8,26 @@
 set -eux
 VAULT_ADDR="<Vault server address>"
 VAULT_NAMESPACE="<Vault namespace>"
-VAULT_ACME_CA_PATH="<pki mount path>"
+VAULT_ACME_CA_PATH="<pki mount path eg. pki_int>"
 EC2_PUBLIC_DNS="$(curl http://169.254.169.254/latest/meta-data/public-hostname)"
 VAULT_AGENT_GROUP="vault"
-VAULT_ACME_PKI_ROLE="<rolename>"
+VAULT_ACME_PKI_ROLE="<rolename eg. clientauth>"
 LINUX_DISTRO="<ubuntu,debian,centos,rhel,fedora,amazon>"
 
+#Create Vault directories
 mkdir -p /opt/vault/tls
 mkdir -p /etc/vault.d
 mkdir -p /opt/vault/secrets
+#Change group of secrets directory to Vault
 chgrp -R vault /opt/vault/secrets
+#Give root and group rwx and others noting
 sudo chmod 0770 /opt/vault/secrets
 
+#Copy the agent config file and systemd unit file to /etc/vault.d
 cp agent-config.hcl /etc/vault.d
 cp vault.service /etc/vault.d
 
-#Remove any pre-installed certbot packages
+#Remove any installed Certbot OS packages
 if [[ "$LINUX_DISTRO" == "ubuntu" || "$LINUX_DISTRO" == "debian" ]]
 then
     apt-get remove certbot
@@ -42,7 +46,7 @@ fi
 snap install --classic certbot
 
 #Install Vault
-#Add a check if Vault is already installed
+#Skip if Vault is already installed
 if [[ "$(vault -v)" ]]
 then
     echo "Vault is already installed."
@@ -86,13 +90,13 @@ openssl s_client -showcerts -connect $VAULT_ADDR_STRIPPED </dev/null 2>/dev/null
 #IF EAB required append --eab-kid <key id> --eab-hmac-key <key>
 certbot certonly --standalone --server $VAULT_ADDR/v1/$VAULT_NAMESPACE/$VAULT_ACME_CA_PATH/roles/$VAULT_ACME_PKI_ROLE/acme/directory -d $EC2_PUBLIC_DNS --key-type rsa --register-unsafely-without-email
 
-#Modify certificate permissions
-chmod 0755 /etc/letsencrypt/{live,archive} #Allows any user to read/execute and owner to read/write/execute the folder
-chgrp -h $VAULT_AGENT_GROUP /etc/letsencrypt/live/$EC2_PUBLIC_DNS/privkey.pem
-chmod 0640 /etc/letsencrypt/live/$EC2_PUBLIC_DNS/privkey.pem #Allows the owner to read/write and group to read the private key
+#Allow Vault Agent to access certificates
+chmod 0755 /etc/letsencrypt/{live,archive} #Grant owner rwx, group rx and others rx
+chgrp -h $VAULT_AGENT_GROUP /etc/letsencrypt/live/$EC2_PUBLIC_DNS/privkey.pem #Change group ownership of the privatekey to Vault group
+chmod 0640 /etc/letsencrypt/live/$EC2_PUBLIC_DNS/privkey.pem #Grant owner rw, group and others nothing
 
 #Inspect cert:
-#sudo openssl x509 -in /etc/letsencrypt/live/$EC2_PUBLIC_DNS/cert.pem -text
+#sudo openssl x509 -in /etc/letsencrypt/live/$EC2_PUBLIC_DNS/fullchain.pem -text
 
 #Check cerbot certs its managing:
 #sudo certbot certificates
@@ -101,7 +105,7 @@ chmod 0640 /etc/letsencrypt/live/$EC2_PUBLIC_DNS/privkey.pem #Allows the owner t
 #systemctl list-timers
 
 #Register and start the Vault Agent service
-mv /etc/vault.d/vault.service /usr/lib/systemd/system
+mv /etc/vault.d/vault.service /usr/lib/systemd/system 
 systemctl enable vault.service
 systemctl start vault.service
 
