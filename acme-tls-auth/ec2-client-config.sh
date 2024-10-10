@@ -109,3 +109,6 @@ mv /etc/vault.d/vault.service /usr/lib/systemd/system
 systemctl enable vault.service
 systemctl start vault.service
 
+#Check Vault Agent logs
+#journalctl -b --no-pager -u vault
+
