@@ -44,18 +44,18 @@ variable "int_ca_clientauth_role_name" {
   default = "clientauth"
 }
 variable "cert_auth_path" {
-    type = string
-    default = "cert"
+  type    = string
+  default = "cert"
 }
 variable "cert_auth_role_name" {
-    type = string
-    default = "vaclient"
+  type    = string
+  default = "vaclient"
 }
 variable "cert_auth_allowed_dns_sans" {
-    type = list(string)
-    default = ["localhost"]
+  type    = list(string)
+  default = ["localhost"]
 }
 variable "cert_auth_policies" {
-  type = list(string)
+  type    = list(string)
   default = ["default"]
 }

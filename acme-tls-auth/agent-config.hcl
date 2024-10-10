@@ -3,7 +3,7 @@ pid_file = "./pidfile"
 vault {
   address = "<Vault server address>"
   namespace = "<Vault namespace>" 
-  ca_cert = "/opt/vault/tls/vault_tls_cert.pem"
+  ca_cert = "/opt/vault/tls/vault_tls_listener_bundle.pem"
   client_cert = "/etc/letsencrypt/live/<EC2_PUBLIC_DNS>/fullchain.pem"
   client_key = "/etc/letsencrypt/live/<EC2_PUBLIC_DNS>/privkey.pem"
 }
@@ -47,7 +47,7 @@ template {
   # unspecified, Consul Template will attempt to match the permissions of the
   # file that already exists at the destination path. If no file exists at that
   # path, the permissions are 0644.
-  perms = "0600"
+  perms = "0640"
    # These are the user and group ownerships of the rendered file. They can be specified
   # in the form of username/group name or UID/GID. If left unspecified, Consul Template
   # will preserve the ownerships of the existing file. If no file exists, the

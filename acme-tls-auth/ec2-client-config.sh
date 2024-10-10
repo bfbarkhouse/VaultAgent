@@ -3,7 +3,7 @@
 
 #===README===
 #Run this script with sudo
-#Upload Vault TLS listener cert to /opt/vault/tls/vault_tls_cert.pem
+#Upload Vault TLS listener cert to /opt/vault/tls/vault_tls_listener_bundle.pem
 #Upload agent-config.hcl to /etc/vault.d/ and modify for your specific values
 #Upload vault.service to /etc/vault.d/
 

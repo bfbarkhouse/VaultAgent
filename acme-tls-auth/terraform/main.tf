@@ -90,10 +90,10 @@ resource "vault_generic_endpoint" "int_pki_acme_config" {
 
 #Create the PKI role to issue TLS client certs.
 resource "vault_pki_secret_backend_role" "int_pki_client_auth_role" {
-  backend        = vault_mount.pki_int.path
-  name           = var.int_ca_clientauth_role_name
-  ttl            = 2592000
-  max_ttl        = 2592000
+  backend = vault_mount.pki_int.path
+  name    = var.int_ca_clientauth_role_name
+  ttl     = 2592000
+  max_ttl = 2592000
   #Any name is allowed since ACME will not issue a cert if the DNS challenge fails
   allow_any_name = true
   no_store       = false
@@ -102,27 +102,25 @@ resource "vault_pki_secret_backend_role" "int_pki_client_auth_role" {
 
 #Set up TLS auth method
 resource "vault_auth_backend" "cert" {
-    path = var.cert_auth_path
-    type = "cert"
+  path = var.cert_auth_path
+  type = "cert"
 }
 
 resource "vault_cert_auth_backend_role" "vault_agent_cert_auth_role" {
-    name           = var.cert_auth_role_name
-    certificate    = vault_pki_secret_backend_root_sign_intermediate.root_sign_int_csr.certificate
-    backend        = vault_auth_backend.cert.path
-    #Prevent authentication if the cert presented does not contain a matching DNS SAN
-    allowed_dns_sans = var.cert_auth_allowed_dns_sans
-    token_ttl      = 3600
-    token_policies = var.cert_auth_policies
+  name        = var.cert_auth_role_name
+  certificate = vault_pki_secret_backend_root_sign_intermediate.root_sign_int_csr.certificate
+  backend     = vault_auth_backend.cert.path
+  #Prevent authentication if the cert presented does not contain a matching DNS SAN
+  allowed_dns_sans = var.cert_auth_allowed_dns_sans
+  token_ttl        = 3600
+  token_policies   = var.cert_auth_policies
 }
 
 #Output the TLS listener CA file
 data "tls_certificate" "vault_tls_listener_cert" {
-    url = var.vault_server
+  url = var.vault_server
 }
 locals {
-    get_leaf_cert = length(data.tls_certificate.vault_tls_listener_cert.certificates)
-    vault_tls_listener_cert = "${data.tls_certificate.vault_tls_listener_cert.certificates["${local.get_leaf_cert}"-1].cert_pem}"
-
+  vault_tls_listener_bundle = join("\n", data.tls_certificate.vault_tls_listener_cert.certificates[*].cert_pem)
 }
 
