@@ -1,10 +1,9 @@
-#vault agent -config-file=/etc/vault/config/agent-config.hcl -log-file=/var/logs/vault-agent.log
-pid_file = "/etc/vault/.pidfile"
+pid_file = "./pidfile"
 
 vault {
   address = "<Vault server address>"
   namespace = "<Vault namespace>" 
-  ca_cert = "/etc/vault/certs/vault_tls_cert.pem"
+  ca_cert = "/opt/vault/tls/vault_tls_cert.pem"
   client_cert = "/etc/letsencrypt/live/<EC2_PUBLIC_DNS>/fullchain.pem"
   client_key = "/etc/letsencrypt/live/<EC2_PUBLIC_DNS>/privkey.pem"
 }
@@ -22,7 +21,7 @@ auto_auth {
     #the written token will be response-wrapped by the sink. 
     wrap_ttl = "10m"
     config = {
-      path = "/etc/vault/.wrapped_vaultoken"
+      path = "/tmp/wrapped-vault-token"
       #A string containing an octal number representing the bit pattern for the file mode, 
       #similar to chmod. Set to 0000 to prevent Vault from modifying the file mode.
       #mode = ""
@@ -43,7 +42,7 @@ template_config {
 
 template {
   contents     = "{{ with secret \"kv/app1\" }}{{ .Data.data.application_secret }}{{ end }}"
-  destination  = "render-content.txt"
+  destination  = "/opt/vault/secrets/application-secret.txt"
    # This is the permission to render the file. If this option is left
   # unspecified, Consul Template will attempt to match the permissions of the
   # file that already exists at the destination path. If no file exists at that
