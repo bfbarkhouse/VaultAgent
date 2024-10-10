@@ -2,9 +2,8 @@
 
 #===README===
 #Run this script with sudo
-#Upload agent-config.hcl to directory where running this script
-#Upload vault.service to directory where running this script
-scp -i vault-acme-demo.pem ~/Documents/Code/VaultAgent/acme-tls-auth/ec2-client-config.sh ubuntu@ec2-54-190-178-231.us-west-2.compute.amazonaws.com:/home/ubuntu/ec2-client-config.sh
+#Upload agent-config.hcl to same directory as this script
+#Upload vault.service to same directory as this script
 
 set -eux
 VAULT_ADDR="<Vault server address>"
