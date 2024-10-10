@@ -1,9 +1,9 @@
-pid_file = "./pidfile"
+pid_file = "/tmp/pidfile"
 
 vault {
   address = "<Vault server address>"
   namespace = "<Vault namespace>" 
-  ca_cert = "/opt/vault/tls/vault_tls_listener_bundle.pem"
+  ca_cert = "/opt/vault/tls/vault_tls_listener.pem"
   client_cert = "/etc/letsencrypt/live/<EC2_PUBLIC_DNS>/fullchain.pem"
   client_key = "/etc/letsencrypt/live/<EC2_PUBLIC_DNS>/privkey.pem"
 }

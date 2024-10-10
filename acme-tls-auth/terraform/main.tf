@@ -116,11 +116,3 @@ resource "vault_cert_auth_backend_role" "vault_agent_cert_auth_role" {
   token_policies   = var.cert_auth_policies
 }
 
-#Output the TLS listener CA file
-data "tls_certificate" "vault_tls_listener_cert" {
-  url = var.vault_server
-}
-locals {
-  vault_tls_listener_bundle = join("\n", data.tls_certificate.vault_tls_listener_cert.certificates[*].cert_pem)
-}
-
