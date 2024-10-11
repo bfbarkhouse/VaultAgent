@@ -96,19 +96,19 @@ chgrp -h $VAULT_AGENT_GROUP /etc/letsencrypt/live/$EC2_PUBLIC_DNS/privkey.pem #C
 chmod 0640 /etc/letsencrypt/live/$EC2_PUBLIC_DNS/privkey.pem #Grant owner rw, group and others nothing
 
 #Inspect cert:
-#sudo openssl x509 -in /etc/letsencrypt/live/$EC2_PUBLIC_DNS/fullchain.pem -text
+#openssl x509 -in /etc/letsencrypt/live/$EC2_PUBLIC_DNS/fullchain.pem -text
 
-#Check cerbot certs its managing:
-#sudo certbot certificates
+#View cerbot managed certificates:
+#certbot certificates
 
-#Check cerbot scheduled monitoring task:
+#Confirm cerbot registered a renewal timer:
 #systemctl list-timers
 
-#Register and start the Vault Agent service
+#Create and start the Vault Agent service
 mv /etc/vault.d/vault.service /usr/lib/systemd/system 
 systemctl enable vault.service
 systemctl start vault.service
 
-#Check Vault Agent logs
+#View Vault Agent logs
 #journalctl -b --no-pager -u vault
 
