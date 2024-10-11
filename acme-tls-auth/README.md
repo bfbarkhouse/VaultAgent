@@ -12,7 +12,7 @@ Full blog post coming soon.
 
 > [Credit to this blog post for inspiration](https://adfinis.com/en/blog/secret-zero-with-acme/).
 
-## Guide
+## Usage
 
 ### Configure Vault
 Terraform is used to configure Vault's PKI secrets engine with a root CA and intermediate CA. The intermediate CA serves as the ACME server endpoint. The intermediate CA has a role which issues signed certificates with ClientAuth extended key usage. There really only needs to be a single role to issue client certificates since the ACME protocol will handle the DNS validation and authorization of the client.
