@@ -27,11 +27,14 @@ terraform apply -var-file=variables.tfvars
 This assumes you have an AWS EC2 Linux instance available and started.
 
 Edit ec2-client-config.sh and set the following variable:
+
+```bash
 VAULT_ADDR="<Vault server address>"
 VAULT_NAMESPACE="<Vault namespace>"
 VAULT_ACME_CA_PATH="<pki mount path eg. pki_int>"
 VAULT_ACME_PKI_ROLE="<rolename eg. clientauth>"
 LINUX_DISTRO="<ubuntu,debian,centos,rhel,fedora,amazon>"
+```
 
 Upload the required files:
 
