@@ -12,6 +12,16 @@ Full blog post coming soon.
 
 ## Guide
 
-###Configure Vault
+### Configure Vault
+Terraform is used to configure Vault's PKI secrets engine with a root CA and intermediate CA. The intermediate CA serves as the ACME server endpoint. The intermediate CA has a role which issues signed certificates with ClientAuth extended key usage. There really only needs to be a single role to issue client certificates since the ACME protocol will handle the DNS validation and authorization that proves the client is entitled to the certificate.
 
-###Configure VM
+Vault's TLS Auth Method is also configured with a role. This role trusts client certificates signed by Vault's intermediate CA. Authorization is controlled by allowed_dns_sans and sets its token ACL policies. This example configures one role, but additional roles should be configured when different policies or different sets of allows DNS SANs are required.
+
+Create a file called variables.tfvars and declare your values
+
+```bash
+export VAULT_TOKEN=...
+terraform apply -var-file=variables.tfvars
+```
+
+### Configure VM
