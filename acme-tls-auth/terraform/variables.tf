@@ -1,6 +1,6 @@
 variable "vault_server" {
   type    = string
-  default = "http://127.0.0.1:8200"
+  default = "https://127.0.0.1:8200"
 }
 variable "vault_ns" {
   type    = string
