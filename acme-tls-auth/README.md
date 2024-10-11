@@ -19,7 +19,9 @@ Terraform is used to configure Vault's PKI secrets engine with a root CA and int
 
 Vault's TLS Auth Method is also configured with a role. This role trusts client certificates signed by Vault's intermediate CA. Authorization is controlled by allowed_dns_sans and sets its token ACL policies. This example configures one role, but additional roles should be configured when different policies or different sets of allows DNS SANs are required.
 
-Create a file called variables.tfvars and declare your values
+#### 1. Create a file called variables.tfvars and declare your values
+
+#### 2. Apply the Terraform
 
 ```bash
 export VAULT_TOKEN=...
@@ -28,6 +30,7 @@ terraform apply -var-file=variables.tfvars
 ### Configure VM
 This assumes you have an AWS EC2 Linux instance available and started.
 
+#### 1. 
 Edit ec2-client-config.sh and set the following variables:
 
 ```bash
@@ -38,7 +41,19 @@ VAULT_ACME_PKI_ROLE="<rolename eg. clientauth>"
 LINUX_DISTRO="<ubuntu,debian,centos,rhel,fedora,amazon>"
 ```
 
-Upload the required files:
+#### 2. 
+Edit agent-config.hcl and set the following values:
+```hcl
+  address = "<Vault server address>"
+  namespace = "<Vault namespace>" 
+  client_cert = "/etc/letsencrypt/live/<EC2_PUBLIC_DNS>/fullchain.pem"
+  client_key = "/etc/letsencrypt/live/<EC2_PUBLIC_DNS>/privkey.pem"
+  ```
+#### 3. 
+  Edit the template{ contents = ... } value in agent-config.hcl to point to a valid secrets engine path that the TLS auth method role has ACL policy to read.
+
+#### 4. 
+Upload the following files:
 
 ```bash
 scp -i <PATH_TO_LOCAL_PRIVATE_SSH_KEY> ec2-client-config.sh <SERVER_USER@SERVER_IP_ADDRESS>:~
@@ -46,7 +61,8 @@ scp -i <PATH_TO_LOCAL_PRIVATE_SSH_KEY> agent-config.hcl <SERVER_USER@SERVER_IP_A
 scp -i <PATH_TO_LOCAL_PRIVATE_SSH_KEY> vault.service <SERVER_USER@SERVER_IP_ADDRESS>:~
 ```
 
-Now SSH into the instance and run the script:
+#### 5. 
+SSH into the instance and execute the script:
 
 ```bash
 ssh -i <PATH_TO_LOCAL_PRIVATE_SSH_KEY> <SERVER_USER@SERVER_IP_ADDRESS>
