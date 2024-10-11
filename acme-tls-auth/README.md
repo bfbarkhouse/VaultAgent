@@ -1,4 +1,4 @@
-# Automatic secure introduction (secret zero) of HashiCorp Vault without platform identity
+# Automatic secure introduction (secret zero) of HashiCorp Vault clients without platform identity
 
 This folder contains code to automate a secure introduction (secret zero) pattern to authenticate to HashiCorp Vault when there isn't an alternative trusted platform identity, such as a VMware vSphere environment. The secret zero used to authenticate to Vault is a TLS client certificate issued by Vault's PKI Engine configured as an Automated Certificate Management Environment (ACME) server. The ACME protocol leverages DNS as the root of trust and clients must satisfy a validation challenge in order to obtain a certificate. 
 
