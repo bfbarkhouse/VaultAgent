@@ -23,5 +23,45 @@ Create a file called variables.tfvars and declare your values
 export VAULT_TOKEN=...
 terraform apply -var-file=variables.tfvars
 ```
-
 ### Configure VM
+This assumes you have an AWS EC2 Linux instance available and started.
+
+Edit ec2-client-config.sh and set the following variable:
+VAULT_ADDR="<Vault server address>"
+VAULT_NAMESPACE="<Vault namespace>"
+VAULT_ACME_CA_PATH="<pki mount path eg. pki_int>"
+VAULT_ACME_PKI_ROLE="<rolename eg. clientauth>"
+LINUX_DISTRO="<ubuntu,debian,centos,rhel,fedora,amazon>"
+
+Upload the required files:
+
+```bash
+scp -i <PATH_TO_LOCAL_PRIVATE_SSH_KEY> ec2-client-config.sh <SERVER_USER@SERVER_IP_ADDRESS>:~
+scp -i <PATH_TO_LOCAL_PRIVATE_SSH_KEY> agent-config.hcl <SERVER_USER@SERVER_IP_ADDRESS>:~
+scp -i <PATH_TO_LOCAL_PRIVATE_SSH_KEY> vault.service <SERVER_USER@SERVER_IP_ADDRESS>:~
+```
+
+Now SSH into the instance and run the script:
+
+```bash
+ssh -i <PATH_TO_LOCAL_PRIVATE_SSH_KEY> <SERVER_USER@SERVER_IP_ADDRESS>
+sudo chmod +x ec2-client-config.sh
+sudo ./ec2-client-config.sh
+```
+View certbot managed certificates:
+
+```bash
+sudo certbot certificates
+```
+
+Confirm cerbot registered a renewal timer:
+
+```bash
+systemctl list-timers
+```
+View Vault Agent logs:
+
+```bash
+journalctl -b --no-pager -u vault
+```
+
