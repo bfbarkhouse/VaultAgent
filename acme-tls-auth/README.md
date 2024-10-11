@@ -1,6 +1,6 @@
 # Automatic secure introduction (secret zero) of HashiCorp Vault clients without platform identity
 
-This folder contains code to automate a secure introduction (secret zero) pattern to authenticate to HashiCorp Vault when there isn't an alternative trusted platform identity, such as a VMware vSphere environment. The secret zero used to authenticate to Vault is a TLS client certificate issued by Vault's PKI Engine configured as an Automated Certificate Management Environment (ACME) server. The ACME protocol leverages DNS as the root of trust and clients must satisfy a validation challenge in order to obtain a certificate. 
+This folder contains code to automate a [secure introduction (secret zero)] (https://developer.hashicorp.com/vault/tutorials/app-integration/secure-introduction) pattern to authenticate to HashiCorp Vault without platform identity integration or trusted orchestrator. This is useful in an environment such as an on-premise VMware vSphere environment. The secret zero used to authenticate to Vault is a TLS client certificate issued by Vault's PKI Engine configured as an Automated Certificate Management Environment (ACME) server. The ACME protocol leverages DNS as the root of trust and clients must satisfy a validation challenge in order to obtain a certificate. 
 
 In pattern demonstrated, a ACME client (cerbot) requests a certificate from a Vault PKI Certificate Authority. The ACME protocol validates the request and then Vault issues a short-lived certiticate back to the client machine. From there, Vault Agent presents the certicate back to Vault's TLS cert auth method for autnetication and authorization. The certificate's DNS SANs are matched to the TLS auth method role and if allowed, Vault returns the client token (containing its ACL policies). Vault Agent logs into Vault with the token to retrieve and render the desired secrets.
 
@@ -26,7 +26,7 @@ terraform apply -var-file=variables.tfvars
 ### Configure VM
 This assumes you have an AWS EC2 Linux instance available and started.
 
-Edit ec2-client-config.sh and set the following variable:
+Edit ec2-client-config.sh and set the following variables:
 
 ```bash
 VAULT_ADDR="<Vault server address>"
