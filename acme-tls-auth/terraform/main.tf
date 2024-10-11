@@ -16,12 +16,11 @@ resource "vault_pki_secret_backend_root_cert" "root_ca_cert" {
   private_key_format = "der"
   key_type           = "rsa"
   key_bits           = 4096
-  #exclude_cn_from_sans  = true
 }
 resource "vault_pki_secret_backend_config_cluster" "root_pki_cluster_config" {
   backend  = vault_mount.pki_root.path
   path     = "${var.vault_server}/v1/${var.root_ca_path}"
-  aia_path = "${var.vault_server}/v1/${var.root_ca_path}t"
+  aia_path = "${var.vault_server}/v1/${var.root_ca_path}"
 }
 resource "vault_pki_secret_backend_role" "server_role" {
   backend         = vault_mount.pki_root.path

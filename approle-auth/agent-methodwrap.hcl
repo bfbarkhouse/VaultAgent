@@ -1,7 +1,7 @@
 pid_file = "./pidfile"
 
 vault {
-  address = "https://bbarkhouse-vault-cluster-prod-public-vault-52d974b0.ccc37cc2.z1.hashicorp.cloud:8200"
+  address = ""
 }
 
 auto_auth {
