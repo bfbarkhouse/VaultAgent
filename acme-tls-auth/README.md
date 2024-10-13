@@ -33,7 +33,7 @@ This assumes you have an AWS EC2 Linux instance available and started with the f
 * The instance has its metadata service enabled. 
 * The attached Security Group allows Vault to connect to port 80 on the target instance (for the http-01 challenge). 
 
-Details on ACME challenge types and custom DNS resolution can be found [here.](https://developer.hashicorp.com/vault/api-docs/v1.17.x/secret/pki#acme-challenge-types)
+> Details on ACME challenge types and custom DNS resolution can be found [here.](https://developer.hashicorp.com/vault/api-docs/v1.17.x/secret/pki#acme-challenge-types)
 
 #### 1. 
 Edit ec2-client-config.sh and set the following variables:
