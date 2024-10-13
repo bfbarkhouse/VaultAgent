@@ -29,6 +29,10 @@ terraform apply -var-file=variables.tfvars
 ```
 ### Configure VM
 This assumes you have an AWS EC2 Linux instance available and started.
+The instance has a Public DNS address or Private DNS address if your Vault server is on the same VPC. 
+The instance has metadata service enabled. 
+Ensure that any firewalls are set up to allow Vault to talk to the relevant systems (the DNS server in the case of dns-01, port 80 on the target machine for http-01, or port 443 on the target machine for tls-alpn-01 challenges).
+Vault's ACME server can be configured with [custom DNS resolvers](https://developer.hashicorp.com/vault/api-docs/v1.17.x/secret/pki#dns_resolver) if needed. 
 
 #### 1. 
 Edit ec2-client-config.sh and set the following variables:
