@@ -2,8 +2,9 @@
 
 #===README===
 #Run this script with sudo
-#Upload agent-config.hcl to same directory as this script
-#Upload vault.service to same directory as this script
+#Stage agent-config.hcl in the same directory as this script
+#Stage vault.service in the same directory as this script
+#============
 
 set -eux
 VAULT_ADDR="<Vault server address>"
@@ -86,8 +87,8 @@ openssl s_client -showcerts -connect $VAULT_ADDR_STRIPPED </dev/null 2>/dev/null
 #export REQUESTS_CA_BUNDLE=/opt/vault/tls/vault_tls_listener.pem
 
 #Request the client certificate from Vault PKI ACME server
-#When using self-signed Vault TLS listener cert append ----no-verify-ssl
-#IF EAB required append --eab-kid <key id> --eab-hmac-key <key>
+#When using self-signed Vault TLS listener cert append: --no-verify-ssl
+#IF EAB required append: --eab-kid <key id> --eab-hmac-key <key>
 certbot certonly --standalone --server $VAULT_ADDR/v1/$VAULT_NAMESPACE/$VAULT_ACME_CA_PATH/roles/$VAULT_ACME_PKI_ROLE/acme/directory -d $EC2_PUBLIC_DNS --key-type rsa --register-unsafely-without-email
 
 #Allow Vault Agent to access certificates
