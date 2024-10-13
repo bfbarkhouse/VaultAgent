@@ -17,7 +17,7 @@ Full blog post coming soon.
 ### Configure Vault
 Terraform is used to configure Vault's PKI secrets engine with a root CA and intermediate CA. The intermediate CA serves as the ACME server endpoint. The intermediate CA has a role which issues signed certificates with ClientAuth extended key usage. There really only needs to be a single role to issue client certificates since the ACME protocol will handle the DNS validation and authorization of the client.
 
-Vault's TLS Auth Method is also configured with a role. This role trusts client certificates signed by Vault's intermediate CA. Authorization is controlled by allowed_dns_sans and sets its token ACL policies. This example configures one role, but additional roles should be configured when different policies or different sets of allows DNS SANs are required.
+Vault's TLS Auth Method is also configured with a role. This role trusts client certificates signed by Vault's intermediate CA. Authorization is controlled by [allowed_dns_sans](https://developer.hashicorp.com/vault/api-docs/auth/cert#allowed_dns_sans) and sets its token ACL policies. This example configures one role, but additional roles should be configured when different policies or different sets of allows DNS SANs are required.
 
 #### 1. Create a file called variables.tfvars and declare your values
 
@@ -31,7 +31,7 @@ terraform apply -var-file=variables.tfvars
 This assumes you have an AWS EC2 Linux instance available and started with the following prerequisites:
 * The instance has a Public DNS (IPv4) hostname. 
 * The instance has its metadata service enabled. 
-* Ensure that the security group allows Vault to connect port 80 on the target instance (for the http-01 challenge). 
+* Ensure that the security group allows Vault to connect to port 80 on the target instance (for the http-01 challenge). 
 
 Details on ACME challenge types and custom DNS resolution can be found [here.](https://developer.hashicorp.com/vault/api-docs/v1.17.x/secret/pki#acme-challenge-types)
 
