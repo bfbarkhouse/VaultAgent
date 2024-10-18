@@ -8,6 +8,10 @@ In the pattern demonstrated, an ACME client [(certbot)](https://certbot.eff.org/
 
 A flow such as this provides an automated way to solve the secure introduction problem with a secret zero that is unique to the client, has a configurable TTL and is automatically renewed without manual intervention. Further, by using Vault Agent, the lifecycles of the Vault token and secrets are fully managed transparently to any application running on the machine.
 
+![Vault Secure Intro  - acme stage](https://github.com/user-attachments/assets/9b573442-ef05-4beb-8291-45b2c474d96e)
+
+![Vault Secure Intro  - acme run](https://github.com/user-attachments/assets/ec151ecd-4864-4a9e-8576-3ca86dc0ab57)
+
 Full blog post coming soon.
 
 > [Credit to this blog post for inspiration](https://adfinis.com/en/blog/secret-zero-with-acme/).
