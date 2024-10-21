@@ -56,4 +56,13 @@ template {
   # will preserve the ownerships of the existing file. If no file exists, the
   # ownerships will default to the user running Consul Template. This option is not
   # supported on Windows.
+  #exec {
+    #command = ["restart", "service", "foo"]
+    #timeout = "30s"
+  #} 
+  #The exec block executes a command when the template is rendered and the output has changed. 
+  #The block parameters are command (string or array: required) and timeout (string: optional, defaults to 30s). 
+  #command can be given as a string or array of strings to execute, such as "touch myfile" or ["touch", "myfile"]. 
+  #To protect against command injection, we strongly recommend using an array of strings, and we attempt to parse that way first. 
+  #Note also that using a comma with the string approach will cause it to be interpreted as an array, which may not be desirable.
 }
