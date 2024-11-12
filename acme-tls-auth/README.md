@@ -8,7 +8,7 @@ In the pattern demonstrated, an ACME client [(certbot)](https://certbot.eff.org/
 
 A flow such as this provides an automated way to solve the secure introduction problem with a secret zero that is unique to the client, has a configurable TTL and is automatically renewed without manual intervention. Further, by using Vault Agent, the lifecycles of the Vault token and secrets are fully managed transparently to any application running on the machine.
 
-Full blog post coming soon.
+Check out the detailed blog post [here.](https://medium.com/hashicorp-engineering/automate-secure-introduction-of-hashicorp-vault-clients-without-platform-identity-6513981a7a6b)
 
 This is a visualization of the VM provisioning flow, using VMware vSphere as an example target platform without inherent identity:
 
